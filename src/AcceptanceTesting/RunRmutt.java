@@ -536,14 +536,6 @@ public class RunRmutt {
     	        }
     		
     		
-    		
-    		
-    		
-    		
-    		
-    		
-    		
-    		
     		System.out.println("AIDA ran");
 
     		
@@ -557,6 +549,10 @@ public class RunRmutt {
                 createLNCFiles(file.toString());
                 
                 cutAndPaste(file.toString(), "D:/Milan/RFI/ToolsForLNCGenarator/rmutt.js/LNCGram/out");
+                Path destinationFile = Paths.get("D:/Milan/RFI/ToolsForLNCGenarator/rmutt.js/LNCGram/output/", "Report_" + file.getFileName());
+                
+                Files.copy(Paths.get(reportAddress), destinationFile, StandardCopyOption.REPLACE_EXISTING);
+                
             } else {
                 cutAndPaste(file.toString(), "D:/Milan/RFI/ToolsForLNCGenarator/rmutt.js/LNCGram/outwitherror");
                 Path destinationFile = Paths.get("D:/Milan/RFI/ToolsForLNCGenarator/rmutt.js/LNCGram/outwitherror/", "Report_" + file.getFileName());
@@ -585,6 +581,7 @@ public class RunRmutt {
     private static void cutAndPaste(String inputFile, String destinationFolder) throws IOException {
         Path sourcePath = Paths.get(inputFile);
         Path destinationPath = Paths.get(destinationFolder, sourcePath.getFileName().toString());
+           
         Files.move(sourcePath, destinationPath, StandardCopyOption.REPLACE_EXISTING);
     }
  
@@ -602,7 +599,8 @@ public class RunRmutt {
             String fileNameWithoutExtension = getFileNameWithoutExtension(file.toString());
 
             // Define output paths
-            Path folderPath = Paths.get("output", fileNameWithoutExtension);
+            Path folderPath = Paths.get(RmuttDirectory+"\\output\\"+fileNameWithoutExtension);
+            
             if (!Files.exists(folderPath)) {
                 Files.createDirectories(folderPath);
             }
