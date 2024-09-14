@@ -56,37 +56,7 @@ public class RunRmutt {
 		
 		
 	}
-	
-	public void runcommand(String Command,String Directory)
-{
-    try {
-    	System.out.println("Command exited with code: " + Command);
-    	System.out.println("Command exited with code: " + Directory);
-    	
-    	
-        // Create a ProcessBuilder to execute the command using Windows cmd
-        ProcessBuilder builder = new ProcessBuilder("cmd.exe", "/c", Command);
-        
-        // Set the directory where the command will be executed
-        builder.directory(new File(Directory));
-
-        // Redirect error stream to standard output
-        builder.redirectErrorStream(true);
-
-        // Start the process
-        Process process = builder.start();
-        
-        // Wait for the process to finish and get the exit code
-        int exitCode = process.waitFor();
-        System.out.println("Command exited with code: " + exitCode);
-        
-    } catch (IOException | InterruptedException e) {
-        e.printStackTrace();
-    }
-
-    
-	}
-	
+		
 	public  String CallRmutt(int i) throws IOException, InterruptedException
 	{
 		String NewFileName = "out" + i + ".txt";
@@ -494,47 +464,16 @@ public class RunRmutt {
             
             // Run command for AIDA code generator
             
-            
-    	//	runcommand(AIDACommand,AIDADirectory);
-
-    		
-    		
-    		
-    		
-    		
-    		
-    		
-    		    String command = "code_generator.bat";
+        
+                String command = "code_generator.bat";
     	        String argument = "inputFolder"; // This is the argument for the batch file
     	        String directory = "D:\\Milan\\RFI\\AIDA-Product_Windows\\standalone";
 
     	        CommandExecutor EX=new CommandExecutor();
-    	        EX.ExecuteCommandWithArgument(command, directory, argument);
+    	        int exitCode=EX.ExecuteCommandWithArgument(command, directory, argument);
     	        // Create ProcessBuilder to execute the command with the input folder as an argument
-    	        ProcessBuilder builder = new ProcessBuilder("cmd.exe", "/c", command, argument);
-    	        builder.directory(new File(directory));
-    	        builder.redirectErrorStream(true); // Redirect error stream to standard output
-
-    	        try {
-    	            // Start the process
-    	            Process process = builder.start();
-
-    	            // Read process output
-    	            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-    	            String line;
-
-    	            while ((line = reader.readLine()) != null) {
-    	        //        System.out.println(line);
-    	            }
-    	            
-    	            // Wait for the process to finish and get the exit code
-    	            int exitCode = process.waitFor();
-    	            System.out.println("Command exited with code: " + exitCode);
-
-    	        } catch (IOException | InterruptedException e) {
-    	            e.printStackTrace();
-    	        }
     		
+    	        System.out.println("Command exited with code: " + exitCode);
     		
     		System.out.println("AIDA ran");
 
@@ -551,7 +490,7 @@ public class RunRmutt {
                 cutAndPaste(file.toString(), "D:/Milan/RFI/ToolsForLNCGenarator/rmutt.js/LNCGram/out");
                 Path destinationFile = Paths.get("D:/Milan/RFI/ToolsForLNCGenarator/rmutt.js/LNCGram/output/", "Report_" + file.getFileName());
                 
-                Files.copy(Paths.get(reportAddress), destinationFile, StandardCopyOption.REPLACE_EXISTING);
+//                Files.copy(Paths.get(reportAddress), destinationFile, StandardCopyOption.REPLACE_EXISTING);
                 
             } else {
                 cutAndPaste(file.toString(), "D:/Milan/RFI/ToolsForLNCGenarator/rmutt.js/LNCGram/outwitherror");
