@@ -51,11 +51,13 @@ private String AIDADirectory;
         String argument = "inputFolder"; // This is the argument for the batch file
         String directory = "D:\\Milan\\RFI\\AIDA-Product_Windows\\standalone";
 
-        CommandExecutor EX=new CommandExecutor();
-        int exitCode=EX.ExecuteCommandWithArgument(command, directory, argument);
+ 
+        int exitCode=CommandExecutor.ExecuteCommandWithArgument(command, directory, argument);
         // Create ProcessBuilder to execute the command with the input folder as an argument
 	
-        System.out.println("Command exited with code: " + exitCode);
+//        System.out.println("Command exited with code: " + exitCode);
+        System.out.println("AIDA ran");
+    	CommandExecutor.RunMessage(exitCode);
 
 	
 }
@@ -76,12 +78,6 @@ private String AIDADirectory;
         CreateSRFFolder CSR=new CreateSRFFolder();
         if (reportContent.contains("Test Report on inputFolder: SUCCESS")) {
         	CSR.createLNCFiles(file.toString());
-            // Copy LDS and LDV into out1
-        	
-        	
-            System.out.println("Sucessful");
-       
-            // Define output paths
             
             Path destinationFile = Paths.get("D:/Milan/RFI/ToolsForLNCGenarator/rmutt.js/LNCGram/out/", "Report_" + fileNameWithoutExtension+".txt");
             Files.copy(Paths.get(reportAddress), destinationFile, StandardCopyOption.REPLACE_EXISTING);
@@ -108,7 +104,7 @@ private String AIDADirectory;
         ManageIO.cleanDirectory(ldsFolderPath);
         ManageIO.cleanDirectory(ldvFolderPath);
 
-        System.out.println("Folders Cleaned");
+//        System.out.println("Folders Cleaned");
 
        
         // Iterate through files and process each one

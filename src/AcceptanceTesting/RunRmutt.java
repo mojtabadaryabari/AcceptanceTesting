@@ -21,9 +21,12 @@ public class RunRmutt {
 		String NewFileName = "out" + i + ".txt";
 		this.RmuttCommand="rmutt Main.rm > tempout/" +NewFileName ;
 		
-		CommandExecutor CX=new CommandExecutor();
-		CX.ExecuteCommandWithoutArgument(RmuttCommand,RmuttDirectory);
-				
+
+		int exitCode=CommandExecutor.ExecuteCommandWithoutArgument(RmuttCommand,RmuttDirectory);
+
+		System.out.println("Rmutt Tools ran");
+		CommandExecutor.RunMessage(exitCode);
+		
 	}
 	
 	

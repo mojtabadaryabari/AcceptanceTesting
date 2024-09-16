@@ -16,7 +16,9 @@ public class AcceptanceTesting {
 	    String directoryPath = "D:\\Milan\\RFI\\ToolsForLNCGenarator\\rmutt.js\\LNCGram";
 	    String AIDAPath = "D:\\Milan\\RFI\\AIDA-Product_Windows\\standalone";
 		Path sourceDir = Paths.get("D://Milan/RFI/ToolsForLNCGenarator/rmutt.js/LNCGram/tempout");
-
+	    String SienaSRF2Json = "D:\\Milan\\GeneratoreSiena_v1.0.4\\SRF2Json";
+	    String SienaGenerator = "D:\\Milan\\GeneratoreSiena_v1.0.4\\input";
+			
 	        
 		RunAIDA R=new RunAIDA(directoryPath,AIDAPath);
 	
@@ -25,12 +27,14 @@ public class AcceptanceTesting {
 	    
 		for (int i = 1; i < 5; i++) {
 		try {
-			
+			    
+			System.out.println("\n\n Project Out"+i+" is created.");	
 				RR.CallRmutt(i);
-		        System.out.println("Rmutt called");
+		        
+		        		
 
 				RR.EditAcessModifiers();
-		        System.out.println("Type changed");
+		       // System.out.println("Acess Modifiers Changed");
 
 		        
 		    	R.create_LNC_For_AIDA();	
@@ -40,10 +44,17 @@ public class AcceptanceTesting {
 
 	  	      for (Path file : files) {	
 		        R.RunAIDATools();  
-	    		System.out.println("AIDA ran");
+	    		
 
 		        R.CheckAidaReports(file);
 	  	      }
+
+	  	      RunSienaTools RS=new RunSienaTools(AIDAPath, SienaSRF2Json);
+	  	      RS.Run();
+    	  	  
+  
+    	  	  
+	  	      
 	    		
 		} catch (IOException | InterruptedException e) {
 			// TODO Auto-generated catch block

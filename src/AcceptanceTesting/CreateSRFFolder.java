@@ -28,7 +28,7 @@ public class CreateSRFFolder {
 	        ManageIO.cleanDirectory(ldsFolderPath);
 	        ManageIO.cleanDirectory(ldvFolderPath);
 
-	        System.out.println("Folders Cleaned");
+//	        System.out.println("Folders Cleaned");
 
 	        
 	        // Iterate through files and process each one
@@ -58,7 +58,7 @@ public class CreateSRFFolder {
 
 	        
 	        
-	        System.out.println("Folders Cleaned");
+//	        System.out.println("Folders Cleaned");
 
 	        String codeContent = new String(Files.readAllBytes(Paths.get(inputFile)));
 	        codeContent = codeContent.replace("valore  Fal /*39,*/", "valore  False /*39,*/");

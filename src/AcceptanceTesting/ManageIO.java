@@ -4,14 +4,17 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.SimpleFileVisitor;
 import java.nio.file.StandardCopyOption;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.List;
 import java.util.Objects;
 
-public class ManageIO {
+public final class ManageIO {
 
 	
 	  public static void cleanDirectory(String folderPath) throws IOException {
@@ -22,9 +25,9 @@ public class ManageIO {
 
 	        for (File file : Objects.requireNonNull(folder.listFiles())) {
 	            if (file.isFile()) {
-	                System.out.println(file.getAbsolutePath());
+	       //         System.out.println(file.getAbsolutePath());
 	                file.delete();
-	                System.out.println("removed");
+	         //       System.out.println("removed");
 	            }
 	        }
 	    }
@@ -90,9 +93,9 @@ public class ManageIO {
 	        }
 	    }
 
-	  public static String getFileNameWithoutExtension(String filePath) {
+/*	  public static String getFileNameWithoutExtension(String filePath) {
 	        return new File(filePath).getName().replaceFirst("[.][^.]+$", "");
-	    }
+	    }*/
 	  
 	  public static String getFileNameWithoutExtension(Path file) {
 	        String fileName = file.getFileName().toString();
@@ -103,9 +106,56 @@ public class ManageIO {
 	        return fileName;
 	    }
 
-		
+	  public static void FoldedrCopy(String source,String target)
+	  { 
+      
+      Path sourceDir = Paths.get(source);
+      Path targetDir = Paths.get(target);
 
-	    
+      try {
+    	  
+    	  
+    	   if (Files.exists(targetDir)) {
+               deleteDirectory(targetDir);
+           }
+    	   
+          Files.walkFileTree(sourceDir, new SimpleFileVisitor<Path>() {
+              @Override
+              public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
+                  Path targetPath = targetDir.resolve(sourceDir.relativize(dir));
+                  if (!Files.exists(targetPath)) {
+                      Files.createDirectory(targetPath);
+                  }
+                  return FileVisitResult.CONTINUE;
+              }
+
+              @Override
+              public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+                  Files.copy(file, targetDir.resolve(sourceDir.relativize(file)), StandardCopyOption.REPLACE_EXISTING);
+                  return FileVisitResult.CONTINUE;
+              }
+          });
+      } catch (IOException e) {
+          e.printStackTrace();
+      }
+  }
+		  
+	  private static void deleteDirectory(Path dir) throws IOException {
+	        Files.walkFileTree(dir, new SimpleFileVisitor<Path>() {
+	            @Override
+	            public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+	                Files.delete(file);
+	                return FileVisitResult.CONTINUE;
+	            }
+
+	            @Override
+	            public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
+	                Files.delete(dir);
+	                return FileVisitResult.CONTINUE;
+	            }
+	        });
+	    }
 	    
 
+	  
 }

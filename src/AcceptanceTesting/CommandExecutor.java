@@ -6,8 +6,13 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class CommandExecutor {
+    public static final String RED = "\033[0;31m";      // Red text
+    public static final String GREEN = "\033[0;32m";    // Green text
+    public static final String RESET = "\033[0m";       // Reset color
 
-	  public int ExecuteCommandWithoutArgument(String command, String directory) throws IOException, InterruptedException {
+    
+
+	  public static int ExecuteCommandWithoutArgument(String command, String directory) throws IOException, InterruptedException {
 	        ProcessBuilder builder = new ProcessBuilder("cmd.exe", "/c", command);
 	        builder.directory(new File(directory));
 	        builder.redirectErrorStream(true);
@@ -15,7 +20,7 @@ public class CommandExecutor {
 	        return process.waitFor();
 	    }
 
-	  public int ExecuteCommandWithArgument(String command, String directory,String Argument) throws IOException, InterruptedException {
+	  public static int ExecuteCommandWithArgument(String command, String directory,String Argument) throws IOException, InterruptedException {
 	     
 	  
 		    ProcessBuilder builder = new ProcessBuilder("cmd.exe", "/c", command, Argument);
@@ -50,6 +55,22 @@ public class CommandExecutor {
 
 	  
 }
+
+	  public static void  RunMessage(int exitCode)
+	  {
+		  
+		  if (exitCode==0)
+		  {
+			  System.out.println(GREEN+"SUCCESS"+RESET);
+		  }
+		  else
+		  {
+			  System.out.println(RED+"ERROR !!!"+RESET);
+			  
+		  }
+		  
+	  }
+
 }
 
 	  
